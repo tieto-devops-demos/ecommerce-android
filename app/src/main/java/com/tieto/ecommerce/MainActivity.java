@@ -12,6 +12,14 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,23 +45,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateProductsList() {
+        InputStream iStream = getResources().openRawResource(R.raw.test_products);
+        List<String> products = null;
+        try {
+            products = getProducts(iStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ListView listView = (ListView) findViewById(R.id.products_list);
-        List<String> products = new ArrayList<>();
-        products.add("iPod");
-        products.add("iPod touch");
-        products.add("iPod nano");
-        products.add("Apple TV");
-        products.add("Mercury");
-        products.add("Venus");
-        products.add("Earth");
-        products.add("Mars");
-        products.add("Jupiter");
-        products.add("Saturn");
-        products.add("Neptune");
-        products.add("Uran");
-        products.add("Pluto");
         listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1,
                 products));
+    }
+
+    public List<String> getProducts(InputStream iStream) throws JSONException, IOException {
+        return getProductsFromJson(readStream(iStream));
+    }
+
+    private String readStream(InputStream iStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
+        StringBuilder text = new StringBuilder();
+        String line;
+        while((line = reader.readLine()) != null)
+            text.append(line + '\n');
+        return text.toString();
+    }
+
+    private List<String> getProductsFromJson(String json) throws JSONException {
+        List<String> products = new ArrayList<>();
+        JSONArray items = new JSONObject(json).getJSONObject("_embedded").getJSONArray("catalog");
+        for(int i = 0; i < items.length(); i++)
+            products.add(items.getJSONObject(i).getString("name"));
+        return products;
     }
 
     @Override
