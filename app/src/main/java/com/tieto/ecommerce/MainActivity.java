@@ -12,18 +12,11 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.json.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +38,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateProductsList() {
-        InputStream iStream = getResources().openRawResource(R.raw.test_products);
+        new HttpGetTask(this).execute("http://131.207.59.30/catalog/catalog");
+    }
+
+    @Override
+    public void taskFinished(String result) {
         List<String> products = null;
         try {
-            products = getProducts(iStream);
+            products = getProductsFromJson(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,20 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 products));
     }
 
-    public List<String> getProducts(InputStream iStream) throws JSONException, IOException {
-        return getProductsFromJson(readStream(iStream));
-    }
-
-    private String readStream(InputStream iStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
-        StringBuilder text = new StringBuilder();
-        String line;
-        while((line = reader.readLine()) != null)
-            text.append(line + '\n');
-        return text.toString();
-    }
-
-    private List<String> getProductsFromJson(String json) throws JSONException {
+    public List<String> getProductsFromJson(String json) throws JSONException {
         List<String> products = new ArrayList<>();
         JSONArray items = new JSONObject(json).getJSONObject("_embedded").getJSONArray("catalog");
         for(int i = 0; i < items.length(); i++)
@@ -94,4 +78,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
