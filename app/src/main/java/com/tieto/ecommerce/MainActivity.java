@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         JSONArray items = new JSONObject(json).getJSONObject("_embedded").getJSONArray("catalog");
         for(int i = 0; i < items.length(); i++) {
             JSONObject item = items.getJSONObject(i);
-            String price = Double.toString(item.getDouble("price"));
-            products.add(new Product(item.getString("name"), price));
+            products.add(new Product(item.getString("name"), item.getDouble("price")));
         }
         return products;
     }

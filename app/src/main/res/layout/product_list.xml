@@ -20,28 +20,27 @@
         android:id="@+id/product_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/product_list_image"
-        android:layout_toEndOf="@+id/product_list_image"
         android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp" />
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/product_list_image"
+        android:layout_toRightOf="@+id/product_list_image"
+        android:text="Title"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
         android:id="@+id/product_list_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
         android:maxLines="1"
         android:paddingEnd="4dp"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        tools:text="Price"
         android:paddingRight="4dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginEnd="13dp" />
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        tools:text="Price" />
 
 </RelativeLayout>

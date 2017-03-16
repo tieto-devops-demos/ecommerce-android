@@ -45,7 +45,7 @@ public class ProductListAdapter extends BaseAdapter {
 
         Product product = (Product) getItem(position);
         titleTextView.setText(product.title);
-        priceTextView.setText(product.price);
+        priceTextView.setText(String.format("%.1f €", product.price));
         imageView.setImageResource(getImageId(position));
         return rowView;
     }

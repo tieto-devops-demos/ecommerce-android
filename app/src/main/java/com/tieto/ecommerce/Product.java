@@ -2,9 +2,9 @@ package com.tieto.ecommerce;
 
 public class Product {
     public String title;
-    public String price;
+    public double price;
 
-    public Product(String title, String price) {
+    public Product(String title, double price) {
         this.title = title;
         this.price = price;
     }
@@ -12,7 +12,7 @@ public class Product {
     @Override
     public boolean equals(Object object) {
         Product product = (Product) object;
-        return title.equals(product.title) && price.equals(product.price);
+        return title.equals(product.title) && price == product.price;
     }
 
     public String toString() {
