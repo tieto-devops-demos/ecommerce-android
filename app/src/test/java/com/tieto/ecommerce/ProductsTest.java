@@ -2,9 +2,12 @@ package com.tieto.ecommerce;
 
 import org.junit.Test;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 public class ProductsTest{
@@ -13,8 +16,12 @@ public class ProductsTest{
         MainActivity activity = new MainActivity();
         String json = readResource("/test_products.json");
 
-        assertThat(activity.getProductsFromJson(json),
-                is(Arrays.asList("iPod", "iPod touch",  "iPod nano", "Apple TV")));
+        List<Product> expected = new ArrayList<>();
+        expected.add(new Product("iPod", "42.0"));
+        expected.add(new Product("iPod touch", "21.0"));
+        expected.add(new Product("iPod nano", "1.0"));
+        expected.add(new Product("Apple TV", "100.0"));
+        assertThat(activity.getProductsFromJson(json), equalTo(expected));
     }
 
     private String readResource(String resource) throws IOException {
