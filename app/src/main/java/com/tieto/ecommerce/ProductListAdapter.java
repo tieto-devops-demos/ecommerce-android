@@ -38,14 +38,16 @@ public class ProductListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = inflater.inflate(R.layout.product_list_item, parent, false);
+        TextView idTextView = (TextView) rowView.findViewById(R.id.product_list_id);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.product_list_image);
         TextView titleTextView = (TextView) rowView.findViewById(R.id.product_list_title);
         TextView priceTextView = (TextView) rowView.findViewById(R.id.product_list_price);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.product_list_image);
 
         Product product = (Product) getItem(position);
+        idTextView.setText(Integer.toString(product.id));
+        imageView.setImageResource(getImageId(position));
         titleTextView.setText(product.title);
         priceTextView.setText(String.format("%.1f €", product.price));
-        imageView.setImageResource(getImageId(position));
         return rowView;
     }
 

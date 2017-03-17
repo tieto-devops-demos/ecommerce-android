@@ -82,10 +82,8 @@ public class ProductsFragment extends Fragment implements AsyncResponse {
         if(json==null)
             return products;
         JSONArray items = new JSONObject(json).getJSONObject("_embedded").getJSONArray("catalog");
-        for(int i = 0; i < items.length(); i++) {
-            JSONObject item = items.getJSONObject(i);
-            products.add(new Product(item.getString("name"), item.getDouble("price")));
-        }
+        for(int i = 0; i < items.length(); i++)
+            products.add(new Product(items.getJSONObject(i)));
         return products;
     }
 
