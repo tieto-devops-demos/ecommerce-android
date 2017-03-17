@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager createViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ProductsFragment(), "products");
-        adapter.addFragment(new CustomersFragment(), "customers");
-        adapter.addFragment(new CustomersFragment(), "orders");
+        adapter.addFragment(new ProductsFragment(), getString(R.string.products));
+        adapter.addFragment(new CustomersFragment(), getString(R.string.customers));
+        adapter.addFragment(new CustomersFragment(), getString(R.string.orders));
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
