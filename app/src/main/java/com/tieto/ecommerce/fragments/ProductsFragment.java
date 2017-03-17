@@ -1,7 +1,9 @@
 package com.tieto.ecommerce.fragments;
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,10 @@ public class ProductsFragment extends Fragment implements AsyncResponse {
 
     @Override
     public void httpTaskFinished(String result) {
+        if(result==null) {
+            showNetworkError();
+            return;
+        }
         List<Product> products = null;
         try {
             products = getProductsFromJson(result);
@@ -54,8 +60,27 @@ public class ProductsFragment extends Fragment implements AsyncResponse {
         populateProductsList(products);
     }
 
+    private void showNetworkError() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Network error")
+                .setMessage("Cannot connect to the server")
+                .setNeutralButton(android.R.string.ok, null)
+                .setPositiveButton(R.string.retry, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        requestProductsList();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     public List<Product> getProductsFromJson(String json) throws JSONException {
         List<Product> products = new ArrayList<>();
+        if(json==null)
+            return products;
         JSONArray items = new JSONObject(json).getJSONObject("_embedded").getJSONArray("catalog");
         for(int i = 0; i < items.length(); i++) {
             JSONObject item = items.getJSONObject(i);

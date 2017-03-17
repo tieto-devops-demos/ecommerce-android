@@ -36,4 +36,11 @@ public class ProductsTest{
             text.append(line + '\n');
         return text.toString();
     }
+
+    @Test
+    public void nullJson() throws Exception {
+        ProductsFragment fragment = new ProductsFragment();
+        assertThat(fragment.getProductsFromJson(null),
+                equalTo((List) new ArrayList<Product>()));
+    }
 }

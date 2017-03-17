@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 
 public class HttpGetTask extends AsyncTask<String, Void, String> {
@@ -25,14 +24,11 @@ public class HttpGetTask extends AsyncTask<String, Void, String> {
         try {
             urlConnection = (HttpURLConnection) new URL(url).openConnection();
             int statusCode = urlConnection.getResponseCode();
-            Log.v("HttpGetTask", "Status code: " + statusCode);
             if (statusCode != HttpURLConnection.HTTP_OK)
                 return null;
             return readStream(urlConnection.getInputStream());
-        } catch (SocketTimeoutException e) {
-            Log.e("HttpGetTask",Log.getStackTraceString(e));
         } catch (IOException e) {
-            Log.e("HttpGetTask",Log.getStackTraceString(e));
+            Log.e("HttpGetTask", Log.getStackTraceString(e));
         } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
