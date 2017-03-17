@@ -2,51 +2,41 @@ package com.tieto.ecommerce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
-import org.json.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.tieto.ecommerce.fragments.CustomersFragment;
+import com.tieto.ecommerce.fragments.ProductsFragment;
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        populateProductsList();
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        initTabbedView();
     }
 
-    private void populateProductsList() {
-        new HttpGetTask(this).execute("http://131.207.59.30/catalog/catalog");
+    private void initTabbedView() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(createViewPager());
     }
 
-    @Override
-    public void taskFinished(String result) {
-        List<Product> products = null;
-        try {
-            products = getProductsFromJson(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ListView listView = (ListView) findViewById(R.id.products_list);
-        listView.setAdapter(new ProductListAdapter(this, products));
-    }
+    private ViewPager createViewPager() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ProductsFragment(), "products");
+        adapter.addFragment(new CustomersFragment(), "customers");
+        adapter.addFragment(new CustomersFragment(), "orders");
 
-    public List<Product> getProductsFromJson(String json) throws JSONException {
-        List<Product> products = new ArrayList<>();
-        JSONArray items = new JSONObject(json).getJSONObject("_embedded").getJSONArray("catalog");
-        for(int i = 0; i < items.length(); i++) {
-            JSONObject item = items.getJSONObject(i);
-            products.add(new Product(item.getString("name"), item.getDouble("price")));
-        }
-        return products;
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+        return viewPager;
     }
 
     @Override
@@ -65,5 +55,4 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

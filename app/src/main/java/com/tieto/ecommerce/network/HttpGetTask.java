@@ -1,4 +1,4 @@
-package com.tieto.ecommerce;
+package com.tieto.ecommerce.network;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -51,7 +51,7 @@ public class HttpGetTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String res) {
-        delegate.taskFinished(res);
+        delegate.httpTaskFinished(res);
     }
 
 }

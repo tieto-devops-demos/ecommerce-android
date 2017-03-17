@@ -1,5 +1,7 @@
 package com.tieto.ecommerce;
 
+import com.tieto.ecommerce.fragments.ProductsFragment;
+
 import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import static org.junit.Assert.*;
 public class ProductsTest{
     @Test
     public void getProducts() throws Exception {
-        MainActivity activity = new MainActivity();
+        ProductsFragment fragment = new ProductsFragment();
         String json = readResource("/test_products.json");
 
         List<Product> expected = new ArrayList<>();
@@ -19,7 +21,7 @@ public class ProductsTest{
         expected.add(new Product("iPod touch", 21.0));
         expected.add(new Product("iPod nano", 1.0));
         expected.add(new Product("Apple TV", 100.0));
-        assertThat(activity.getProductsFromJson(json), equalTo(expected));
+        assertThat(fragment.getProductsFromJson(json), equalTo(expected));
     }
 
     private String readResource(String resource) throws IOException {
