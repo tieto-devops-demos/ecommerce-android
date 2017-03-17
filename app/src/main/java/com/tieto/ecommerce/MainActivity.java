@@ -20,12 +20,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        initTabbedView();
+        TabLayout tabLayout = createTabLayout();
+        initTabIcons(tabLayout);
     }
 
-    private void initTabbedView() {
+    private TabLayout createTabLayout() {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(createViewPager());
+        return tabLayout;
     }
 
     private ViewPager createViewPager() {
@@ -37,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
         return viewPager;
+    }
+
+    private void initTabIcons(TabLayout tabLayout) {
+        tabLayout.getTabAt(0).setIcon(R.drawable.products);
+        tabLayout.getTabAt(1).setIcon(R.drawable.customers);
+        tabLayout.getTabAt(2).setIcon(R.drawable.orders);
     }
 
     @Override
