@@ -22,6 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
@@ -73,11 +74,13 @@ public class MainActivityTest {
     public void firstProductIsVisible_2() throws InterruptedException {
         onView(withId(R.id.products_list))
                 .check(matches(isDisplayed()));
-        onData(is(instanceOf(Product.class)))
+        onData(anything())
+                .inAdapterView(withId(R.id.products_list))
                 .atPosition(0)
                 .onChildView(withId(R.id.product_list_title))
                 .check(matches(withText("iPod")));
-        onData(is(instanceOf(Product.class)))
+        onData(anything())
+                .inAdapterView(withId(R.id.products_list))
                 .atPosition(2)
                 .onChildView(withId(R.id.product_list_title))
                 .check(matches(withText("iPod nano")));
@@ -86,10 +89,13 @@ public class MainActivityTest {
     @Test
     public void selectCustomersTab() {
         onView(withText("customers")).perform(click());
-
-        onView(allOf(isDescendantOfA(withId(R.id.viewpager)),
-                withClassName(endsWith("TextView")),
-                isDisplayed()))
-                .check(matches(withText("Customers view")));
+        onView(withId(R.id.items_list))
+                .check(matches(isDisplayed()));
+        onData(anything())
+                .inAdapterView(withId(R.id.items_list))
+                .atPosition(0)
+                .onChildView(withId(R.id.customer_list_last_name))
+                .check(matches(withText("Wolff")));
     }
+
 }

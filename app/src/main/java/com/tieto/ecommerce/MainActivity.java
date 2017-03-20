@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tieto.ecommerce.fragments.CustomersFragment;
+import com.tieto.ecommerce.fragments.OrdersFragment;
 import com.tieto.ecommerce.fragments.ProductsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ProductsFragment(), getString(R.string.products));
         adapter.addFragment(new CustomersFragment(), getString(R.string.customers));
-        adapter.addFragment(new CustomersFragment(), getString(R.string.orders));
+        adapter.addFragment(new OrdersFragment(), getString(R.string.orders));
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
