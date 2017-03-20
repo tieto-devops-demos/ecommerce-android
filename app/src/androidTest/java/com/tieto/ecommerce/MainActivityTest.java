@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -21,6 +22,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.*;
@@ -55,7 +58,7 @@ public class MainActivityTest {
             MainActivity.class);
 
     @Test
-    public void productsListIsVisible() throws InterruptedException {
+    public void firstProductIsVisible() throws InterruptedException {
 
         Matcher<View> firstRow = allOf(childOf(withId(R.id.products_list), 0),
                 withClassName(endsWith("RelativeLayout")));
@@ -64,6 +67,20 @@ public class MainActivityTest {
         onView(allOf(withId(R.id.product_list_title),
                 isDescendantOfA(firstRow)))
                 .check(matches(withText("iPod")));
+    }
+
+    @Test
+    public void firstProductIsVisible_2() throws InterruptedException {
+        onView(withId(R.id.products_list))
+                .check(matches(isDisplayed()));
+        onData(is(instanceOf(Product.class)))
+                .atPosition(0)
+                .onChildView(withId(R.id.product_list_title))
+                .check(matches(withText("iPod")));
+        onData(is(instanceOf(Product.class)))
+                .atPosition(2)
+                .onChildView(withId(R.id.product_list_title))
+                .check(matches(withText("iPod nano")));
     }
 
     @Test
