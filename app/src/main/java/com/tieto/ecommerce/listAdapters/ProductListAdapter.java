@@ -1,4 +1,4 @@
-package com.tieto.ecommerce;
+package com.tieto.ecommerce.listAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,14 +7,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.tieto.ecommerce.R;
+import com.tieto.ecommerce.shopItems.Product;
+import com.tieto.ecommerce.shopItems.ShopItem;
+
 import java.util.List;
 
 public class ProductListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<Product> dataSource;
+    private List<ShopItem> dataSource;
 
-    public ProductListAdapter(Context context, List<Product> items) {
+    public ProductListAdapter(Context context, List<ShopItem> items) {
         this.context = context;
         dataSource = items;
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -4,7 +4,7 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context="com.tieto.ecommerce.fragments.CustomersFragment">
+tools:context="com.tieto.ecommerce.fragments.ItemsFragment">
 
 <ListView
     android:id="@+id/items_list"
