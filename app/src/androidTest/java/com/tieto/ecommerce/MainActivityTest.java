@@ -15,6 +15,7 @@ import java.util.List;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -60,4 +61,15 @@ public class MainActivityTest {
                 .check(matches(withText("Wolff")));
     }
 
+    @Test
+    public void selectOrdersTab() {
+        onView(withText("orders")).perform(click());
+    }
+
+    @Test
+    public void aboutView() {
+        onView(withContentDescription("More options")).perform(click());
+        onView(withText("About")).perform(click());
+        onView(withId(R.id.app_name)).check(matches(isDisplayed()));
+    }
 }
