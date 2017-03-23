@@ -18,14 +18,14 @@ compile:
   stages:
     - stage: Compile
       jobs:
-        - job: Android_APK_build
+        - job: Android_Tests
           tasks:
-            - task: true
-#              build_path: .
-#              run_if_conditions: passed
-#            - task: sudo docker build -f Dockerfile -t order:$GO_PIPELINE_COUNTER .
-#              build_path: .
-#              run_if_conditions: passed
+            - task: gradlew test
+              build_path: .
+              run_if_conditions: passed
+            - task: gradlew build #order:$GO_PIPELINE_COUNTER .
+              build_path: .
+              run_if_conditions: passed
 
 #integration_testing:
 #  compose_file_path: /src/test/resources
