@@ -20,10 +20,12 @@ compile:
       jobs:
         - job: Android_Tests
           tasks:
-            - task: gradlew test
+            - task: ./gradlew test
               build_path: .
               run_if_conditions: passed
-            - task: gradlew build #order:$GO_PIPELINE_COUNTER .
+        - job: Android_Build
+          tasks:
+            - task: ./gradlew build #order:$GO_PIPELINE_COUNTER .
               build_path: .
               run_if_conditions: passed
 
