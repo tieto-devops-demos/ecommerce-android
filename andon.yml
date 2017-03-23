@@ -13,7 +13,7 @@ general:
 compile:
   go_cd_agent_props:
     - java:8
-    - maven
+    - android
 #  sonarqube: true
   stages:
     - stage: Compile
