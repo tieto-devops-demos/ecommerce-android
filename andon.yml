@@ -16,14 +16,16 @@ compile:
     - android
 #  sonarqube: true
   stages:
-    - stage: Compile
+    - stage: CompileAndTest
       jobs:
         - job: Android_Tests
           tasks:
             - task: ./gradlew test
               build_path: .
               run_if_conditions: passed
-        - job: Android_Build
+    - stage: BuildAPK
+      jobs:
+        - job: Android_BuildAPK
           tasks:
             - task: ./gradlew build #order:$GO_PIPELINE_COUNTER .
               build_path: .
