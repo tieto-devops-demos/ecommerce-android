@@ -7,7 +7,7 @@ pre_stage:
    - java:8
    - android
  custom_cmd:
-   - keytool -genkeypair -noprompt -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias $ALIAS -storepass $STOREPASSWD -keypass $KEYPASSWD
+   - keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias $ALIAS -storepass $STOREPASSWD -keypass $KEYPASSWD
 
 compile:
   go_cd_agent_props:
