@@ -2,13 +2,12 @@ general:
   whitelist: true
   pipeline_base_name: AndroidApp
 
-#pre_stage:
-#  go_cd_agent_props:
-#    - java:8
-#    - maven
-#  custom_cmd:
-#    - true
-#    - true
+pre_stage:
+ go_cd_agent_props:
+   - java:8
+   - android
+ custom_cmd:
+   - keytool -genkeypair -v -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias $ALIAS -storepass $STOREPASSWD -keypass $KEYPASSWD
 
 compile:
   go_cd_agent_props:
