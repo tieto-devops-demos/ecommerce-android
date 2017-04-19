@@ -21,20 +21,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-android {
-    signingConfigs {
-            release {
-                keyAlias "ecommerce"
-                keyPassword RELEASE_KEY_PASSWORD
-                storeFile "ecommerce-release-key.jks"
-                storePassword RELEASE_STORE_PASSWORD
-            }
-        }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
-}
