@@ -21,7 +21,7 @@ compile:
             - task: ./gradlew test
               build_path: .
               run_if_conditions: passed
-    - stage: BuildAndSignAPK
+    - stage: BuildAPK
       jobs:
         - job: Android_BuildAPK
           tasks:
