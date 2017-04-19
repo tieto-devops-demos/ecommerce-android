@@ -7,13 +7,12 @@ pre_stage:
    - java:8
    - android
  custom_cmd:
-   - keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias $ALIAS -storepass $STOREPASSWD -keypass $KEYPASSWD
+   - keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
 
 compile:
   go_cd_agent_props:
     - java:8
     - android
-#  sonarqube: true
   stages:
     - stage: CompileAndTest
       jobs:
@@ -22,49 +21,10 @@ compile:
             - task: ./gradlew test
               build_path: .
               run_if_conditions: passed
-    - stage: BuildAPK
+    - stage: BuildAndSignAPK
       jobs:
         - job: Android_BuildAPK
           tasks:
-            - task: ./gradlew build #order:$GO_PIPELINE_COUNTER .
+            - task: ./gradlew clean build -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD
               build_path: .
               run_if_conditions: passed
-
-#integration_testing:
-#  compose_file_path: /src/test/resources
-#  compose_file_name: docker-compose.yml
-
-#  tests:
-#    go_cd_agent_props:
-#      - java:8
-#      - maven
-#    test_services:
-#      service_virtualization: true
-#      robot_framework: true
-#      cucumber: false
-#    stages:
-#      - stage: IntegrationTests
-#        jobs:
-#          - job: Robot
-#            selenium_grid: true
-#            browser_stack: false
-#            tasks:
-#              - task: mvn -P robot -Drobot.url=http://order:8080 -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.browser=chrome install
-#                build_path: .
-#                run_if_conditions: passed
-
-#  selenium:
-#    version: "2.53.1"
-#    browsers:
-#    - name: chrome
-#      amount: 1
-#    - name: firefox
-#      amount: 1
-
-#post_stage:
-#  go_cd_agent_props:
-#    - java:8
-#    - maven
-#  custom_cmd:
-#      - sudo docker login -u eekamak -p $passu
-#      - sudo docker tag order:$GO_PIPELINE_COUNTER order:latest
