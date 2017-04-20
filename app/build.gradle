@@ -11,7 +11,7 @@ android {
             keyAlias "ecommerce"
             keyPassword RELEASE_KEY_PASSWORD
             storeFile "ecommerce-release-key.jks"
-            storePassword RELEASE_STORE_PASSWORD
+            storePassword "trialanderror"
         }
     }
     compileSdkVersion 23
