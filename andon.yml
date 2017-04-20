@@ -2,18 +2,19 @@ general:
   whitelist: true
   pipeline_base_name: AndroidApp
 
-pre_stage:
- go_cd_agent_props:
-   - java:8
-   - android
- custom_cmd:
-   - keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
 
 compile:
   go_cd_agent_props:
     - java:8
     - android
   stages:
+    - stage: GenerateKeys
+      jobs:
+        - job: Android_Tests
+          tasks:
+            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
+              build_path: .
+              run_if_conditions: passed
     - stage: CompileAndTest
       jobs:
         - job: Android_Tests
