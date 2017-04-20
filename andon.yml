@@ -12,7 +12,7 @@ compile:
       jobs:
         - job: Android_Tests
           tasks:
-            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/keystore/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
+            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
               build_path: .
               run_if_conditions: passed
     - stage: CompileAndTest
