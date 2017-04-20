@@ -14,21 +14,30 @@ android {
             storePassword RELEASE_STORE_PASSWORD
         }
     }
+
     compileSdkVersion 23
     buildToolsVersion "25.0.0"
+
     defaultConfig {
         applicationId "com.tieto.ecommerce"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
+        buildId  BUILD_ID
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce_" + versionName + "-" + buildId + ".apk"))
+                }
+            }
         }
     }
 }

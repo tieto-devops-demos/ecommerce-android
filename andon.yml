@@ -19,13 +19,13 @@ compile:
       jobs:
         - job: Android_Tests
           tasks:
-            - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD
+            - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PBUILD_ID=$GO_PIPELINE_COUNTER
               build_path: .
               run_if_conditions: passed
     - stage: BuildAPK
       jobs:
         - job: Android_BuildAPK
           tasks:
-            - task: ./gradlew clean build -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD
+            - task: ./gradlew clean build -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PBUILD_ID=$GO_PIPELINE_COUNTER
               build_path: .
               run_if_conditions: passed
