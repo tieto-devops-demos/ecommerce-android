@@ -10,7 +10,7 @@ android {
         config {
             keyAlias "ecommerce"
             keyPassword RELEASE_KEY_PASSWORD
-            storeFile file("ecommerce-release-key.jks")
+            storeFile file("../ecommerce-release-key.jks")
             storePassword RELEASE_STORE_PASSWORD
         }
     }
