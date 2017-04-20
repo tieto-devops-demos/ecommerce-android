@@ -18,7 +18,7 @@ compile:
       jobs:
         - job: Android_Tests
           tasks:
-            - task: ./gradlew test -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD
+            - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD
               build_path: .
               run_if_conditions: passed
     - stage: BuildAPK
