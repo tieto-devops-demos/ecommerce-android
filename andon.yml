@@ -8,11 +8,6 @@ compile:
     - java:8
     - android
   stages:
-    # - stage: GenerateKeys
-    #   jobs:
-    #     - job: Android_Tests
-    #       tasks:
-    #         - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
     - stage: CompileAndTest
       jobs:
         - job: Android_Tests
@@ -30,10 +25,6 @@ compile:
             - task: ./gradlew build -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -Pbuild_id=$GO_PIPELINE_COUNTER -Partifactory_user=pajuuilp -Partifactory_password=$ARTIFACTORY_PASSWD
               build_path: .
               run_if_conditions: any
-    - stage: PublishAPK
-      jobs:
-        - job: Android_Artifactory
-          tasks:
             - task: ./gradlew artifactoryPublish -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -Pbuild_id=$GO_PIPELINE_COUNTER -Partifactory_user=pajuuilp -Partifactory_password=$ARTIFACTORY_PASSWD
               build_path: .
-              run_if_conditions: any
+              run_if_conditions: passed
