@@ -8,11 +8,11 @@ compile:
     - java:8
     - android
   stages:
-    - stage: GenerateKeys
-      jobs:
-        - job: Android_Tests
-          tasks:
-            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
+    # - stage: GenerateKeys
+    #   jobs:
+    #     - job: Android_Tests
+    #       tasks:
+    #         - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
     - stage: CompileAndTest
       jobs:
         - job: Android_Tests
@@ -24,7 +24,7 @@ compile:
       jobs:
         - job: Android_BuildAPK
           tasks:
-            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
+            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /var/lib/go-agent/pipelines/AndroidApp_master/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
             - task: ./gradlew clean build -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD  -Pbuild_id=$GO_PIPELINE_COUNTER
               build_path: .
               run_if_conditions: any
