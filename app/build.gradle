@@ -37,7 +37,7 @@ publishing {
     publications {
         apk(MavenPublication) {
             groupId = group
-            version = version + "-"+ "${build_id}"
+            version = version + "-"+ build
             artifactId = 'ecommerce'
 
             // Tell maven to prepare the generated "*.apk" file for publishing
