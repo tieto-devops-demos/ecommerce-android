@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
-String BUILD_ID = project.getProperty("build_id")
-
 android {
 
     signingConfigs {
@@ -19,11 +17,10 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId = "com.tieto.andon"
         minSdkVersion = 16
         targetSdkVersion = 23
         versionCode = 1
-        versionName = "0.1"
+        versionName "${projectVersionName}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,25 +29,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce-0.1_" + BUILD_ID + ".apk"))
-                }
-            }
         }
     }
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
-            groupId = "com.tieto.andon"
-            version = "0.1"
-            artifactId = project.getName()
+        apk(MavenPublication) {
+            groupId = group
+            version = version + "-"+ "${build_id}"
+            artifactId = 'ecommerce'
 
-
-            // Tell maven to prepare the generated "*.aar" file for publishing
-            artifact("$buildDir/outputs/apk/ecommerce-" + version + "_" + BUILD_ID +".apk")
+            // Tell maven to prepare the generated "*.apk" file for publishing
+            artifact("$buildDir/outputs/apk/app-release.apk")
       }
     }
 }
@@ -65,13 +56,13 @@ artifactory {
 
         }
         defaults {
-            publications('maven')
+            publications('apk')
             publishArtifacts = true
 
             // Properties to be attached to the published artifacts.
             properties = ['qa.level': 'basic', 'dev.team': 'core']
             // Publish generated POM files to Artifactory (true by default)
-            publishPom = true
+            publishPom = false
         }
     }
 }
