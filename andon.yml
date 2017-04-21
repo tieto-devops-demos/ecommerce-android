@@ -13,15 +13,13 @@ compile:
         - job: Android_Tests
           tasks:
             - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
-              build_path: .
-              run_if_conditions: passed
     - stage: CompileAndTest
       jobs:
         - job: Android_Tests
           tasks:
             - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PBUILD_ID=$GO_PIPELINE_COUNTER
               build_path: .
-              run_if_conditions: passed
+              run_if_conditions: any
     - stage: BuildAPK
       jobs:
         - job: Android_BuildAPK
