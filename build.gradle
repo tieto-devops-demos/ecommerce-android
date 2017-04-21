@@ -27,8 +27,7 @@ artifactory {
         repository {
             repoKey = 'andon'
             username = "${artifactory_user}"
-            password = project.getProperty("artifactory_password")
-            maven = true
+            password = "${artifactory_password}"
 
         }
         defaults {
