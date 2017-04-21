@@ -1,4 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
         jcenter()
@@ -16,27 +15,6 @@ allprojects {
         jcenter()
     }
 
-}
-
-artifactory {
-    contextUrl = "${artifactory_contextUrl}"
-    publish {
-        repository {
-            repoKey = 'andon'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-
-        }
-        defaults {
-            publications('maven')
-            publishArtifacts = true
-
-            // Properties to be attached to the published artifacts.
-            properties = ['qa.level': 'basic', 'dev.team': 'core']
-            // Publish generated POM files to Artifactory (true by default)
-            publishPom = true
-        }
-    }
 }
 
 task clean(type: Delete) {
