@@ -43,7 +43,7 @@ android {
 
 publishing {
     publications {
-        AndroidAPK(MavenPublication) {
+        maven(MavenPublication) {
             groupId = "com.tieto.andon"
             version = "0.1"
             artifactId = project.getName()
@@ -54,6 +54,28 @@ publishing {
       }
     }
 }
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = 'andon'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+
+        }
+        defaults {
+            publications('maven')
+            publishArtifacts = true
+
+            // Properties to be attached to the published artifacts.
+            properties = ['qa.level': 'basic', 'dev.team': 'core']
+            // Publish generated POM files to Artifactory (true by default)
+            publishPom = true
+        }
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

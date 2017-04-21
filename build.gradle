@@ -28,7 +28,7 @@ artifactory {
 
         }
         defaults {
-            publications('AndroidAPK')
+            publications('maven')
             publishArtifacts = true
 
             // Properties to be attached to the published artifacts.
