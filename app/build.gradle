@@ -3,8 +3,8 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
 String BUILD_ID = project.getProperty("build_id")
-packageName = 'com.tieto.andon'
-libraryVersion = '0.1'
+def packageName = 'com.tieto.andon'
+def libraryVersion = '0.1'
 
 android {
 
