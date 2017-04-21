@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 
 String BUILD_ID = project.getProperty("build_id")
 
@@ -17,11 +19,11 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "com.tieto.ecommerce"
+        applicationId packageName
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "0.1"
+        versionName libraryVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,13 +34,25 @@ android {
             signingConfig signingConfigs.config
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce_" + versionName + "-" + BUILD_ID + ".apk"))
+                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce-" + libraryVersion + "_" + BUILD_ID + ".apk"))
                 }
             }
         }
     }
 }
 
+publishing {
+    publications {
+        apk(MavenPublication) {
+            groupId packageName
+            version = libraryVersion
+            artifactId project.getName()
+
+            // Tell maven to prepare the generated "*.aar" file for publishing
+            artifact("$buildDir/outputs/apk/ecommerce-" + version + "_" + BUILD_ID"+".apk")
+      }
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
