@@ -24,6 +24,6 @@ compile:
       jobs:
         - job: Android_BuildAPK
           tasks:
-            - task: ./gradlew clean build -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PBUILD_ID=$GO_PIPELINE_COUNTER
+            - task: ./gradlew clean build -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD -Pbuild_id=$GO_PIPELINE_COUNTER
               build_path: .
               run_if_conditions: passed
