@@ -26,7 +26,7 @@ artifactory {
     publish {
         repository {
             repoKey = 'andon'
-            username = project.getProperty("artifactory_user")
+            username = "${artifactory_user}"
             password = project.getProperty("artifactory_password")
             maven = true
 
