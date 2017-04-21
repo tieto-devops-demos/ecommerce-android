@@ -3,8 +3,6 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
 String BUILD_ID = project.getProperty("build_id")
-def packageName = 'com.tieto.andon'
-def libraryVersion = '0.1'
 
 android {
 
@@ -21,11 +19,11 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId = packageName
+        applicationId = "com.tieto.andon"
         minSdkVersion = 16
         targetSdkVersion = 23
         versionCode = 1
-        versionName = libraryVersion
+        versionName = "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,7 +34,7 @@ android {
             signingConfig signingConfigs.config
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce-" + libraryVersion + "_" + BUILD_ID + ".apk"))
+                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce-0.1_" + BUILD_ID + ".apk"))
                 }
             }
         }
@@ -46,8 +44,8 @@ android {
 publishing {
     publications {
         AndroidAPK(MavenPublication) {
-            groupId = packageName
-            version = libraryVersion
+            groupId = "com.tieto.andon"
+            version = "0.1"
             artifactId = project.getName()
 
 
