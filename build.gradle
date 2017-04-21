@@ -17,7 +17,6 @@ allprojects {
 
     group   = "${projectGroupName}"
     version = "${projectVersionName}"
-    build   = "${build_id}"
 }
 
 task clean(type: Delete) {
