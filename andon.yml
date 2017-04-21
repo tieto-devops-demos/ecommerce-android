@@ -19,11 +19,12 @@ compile:
           tasks:
             - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -Pbuild_id=$GO_PIPELINE_COUNTER
               build_path: .
-              run_if_conditions: any
+              run_if_conditions: passed
     - stage: BuildAPK
       jobs:
         - job: Android_BuildAPK
           tasks:
-            - task: ./gradlew clean build -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PRELEASE_STORE_PASSWORD=$STOREPASSWD -Pbuild_id=$GO_PIPELINE_COUNTER
+            - task: keytool -genkeypair -v -noprompt -dname "cn=andon, ou=tieto, c=fi" -keystore /etc/andon/ecommerce-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias ecommerce -storepass $STOREPASSWD -keypass $KEYPASSWD
+            - task: ./gradlew clean build -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD  -Pbuild_id=$GO_PIPELINE_COUNTER
               build_path: .
-              run_if_conditions: passed
+              run_if_conditions: any

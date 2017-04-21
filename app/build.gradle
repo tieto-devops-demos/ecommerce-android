@@ -8,7 +8,7 @@ android {
         config {
             keyAlias "ecommerce"
             keyPassword RELEASE_KEY_PASSWORD
-            storeFile file("/etc/andon/ecommerce-release-key.jks")
+            storeFile file("/var/lib/go-agent/pipelines/AndroidApp_master/ecommerce-release-key.jks")
             storePassword RELEASE_STORE_PASSWORD
         }
     }
