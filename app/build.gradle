@@ -47,9 +47,10 @@ publishing {
             groupId packageName
             version = libraryVersion
             artifactId project.getName()
+  
 
             // Tell maven to prepare the generated "*.aar" file for publishing
-            artifact("$buildDir/outputs/apk/ecommerce-" + version + "_" + BUILD_ID"+".apk")
+            artifact("$buildDir/outputs/apk/ecommerce-" + version + "_" + BUILD_ID +".apk")
       }
     }
 }
