@@ -3,6 +3,8 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
 String BUILD_ID = project.getProperty("build_id")
+packageName = 'com.tieto.andon'
+libraryVersion = '0.1'
 
 android {
 
@@ -19,11 +21,11 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId packageName
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 1
-        versionName libraryVersion
+        applicationId = packageName
+        minSdkVersion = 16
+        targetSdkVersion = 23
+        versionCode = 1
+        versionName = libraryVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -44,10 +46,10 @@ android {
 publishing {
     publications {
         apk(MavenPublication) {
-            groupId packageName
+            groupId = packageName
             version = libraryVersion
-            artifactId project.getName()
-  
+            artifactId = project.getName()
+
 
             // Tell maven to prepare the generated "*.aar" file for publishing
             artifact("$buildDir/outputs/apk/ecommerce-" + version + "_" + BUILD_ID +".apk")
