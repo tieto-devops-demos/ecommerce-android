@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-/*
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-*/
+
+String BUILD_ID = project.getProperty("build_id")
+
 android {
 
     signingConfigs {
@@ -24,7 +22,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "0.1"
-        buildId  1
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,7 +32,7 @@ android {
             signingConfig signingConfigs.config
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce_" + versionName + "-" + buildId + ".apk"))
+                    output.outputFile = new File(output.outputFile.parent, output.outputFile.name.replace("app-release.apk", "ecommerce_" + versionName + "-" + BUILD_ID + ".apk"))
                 }
             }
         }

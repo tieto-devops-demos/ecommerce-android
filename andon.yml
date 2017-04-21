@@ -17,7 +17,7 @@ compile:
       jobs:
         - job: Android_Tests
           tasks:
-            - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -PBUILD_ID=$GO_PIPELINE_COUNTER
+            - task: ./gradlew test -PRELEASE_STORE_PASSWORD=$STOREPASSWD -PRELEASE_KEY_PASSWORD=$KEYPASSWD -Pbuild_id=$GO_PIPELINE_COUNTER
               build_path: .
               run_if_conditions: any
     - stage: BuildAPK
