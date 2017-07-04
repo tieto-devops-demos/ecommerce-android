@@ -18,8 +18,8 @@ import java.util.List;
 
 abstract public class ItemsFragment extends Fragment implements AsyncResponse {
 
-    // final String SERVER_ADDR = "http://ecommerce.common.pub.tds.tieto.com";
-    final String SERVER_ADDR = "http://zuul:8080";
+    final String SERVER_ADDR = "http://ecommerce.common.pub.tds.tieto.com";
+    // final String SERVER_ADDR = "http://zuul:8080";
 
     protected String requestPath;
     private ListView listView = null;
